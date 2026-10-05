@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>أذكاري | أذكار الصباح والمساء</title>
+<meta name="description" content="موقع أذكار الصباح والمساء بتصميم عصري أنيق، مع تكبير الخط لكبار السن والوضع الليلي ومسبحة إلكترونية لكل ذكر." />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dawod/thmanyah-font-web/index.css" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤲</text></svg>" />
+</head>
+<body>
+<div class="bg-pattern" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">☾</div>
+      <div>
+        <h1>أذكاري</h1>
+        <p>أذكار الصباح والمساء</p>
+      </div>
+    </div>
+
+    <div class="controls" role="toolbar" aria-label="إعدادات العرض">
+      <div class="font-controls" role="group" aria-label="حجم الخط">
+        <span class="controls-label">حجم الخط</span>
+        <button id="fontDecrease" class="icon-btn" aria-label="تصغير الخط">أ−</button>
+        <span id="fontSizeLabel" class="font-label" aria-live="polite">100%</span>
+        <button id="fontIncrease" class="icon-btn" aria-label="تكبير الخط">أ+</button>
+        <button id="seniorMode" class="pill-btn" aria-pressed="false" title="وضع مريح لكبار السن بخط كبير جداً وأزرار أكبر">👴 وضع كبار السن</button>
+      </div>
+      <button id="themeToggle" class="icon-btn theme-btn" aria-label="تبديل المظهر غامق / فاتح">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">ليلي</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container">
+  <div class="hero-card">
+    <div class="hero-text">
+      <p class="hijri" id="hijriDate">—</p>
+      <h2 id="heroTitle">🌅 أذكار الصباح</h2>
+      <p class="hero-sub">ابدأ يومك بذكر الله وطمأنينة القلب. اضغط على زر التسبيح لكل ذكر حتى يكتمل، وسيُحفظ تقدمك تلقائياً.</p>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="progressText">أنجزت 0 من 0</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBarWrap">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button id="resetAll" class="ghost-btn">↺ إعادة التصفير</button>
+        <button id="showDoneToggle" class="ghost-btn" aria-pressed="true">إخفاء المنجز</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="tasbih-total">
+        <div class="tasbih-total-num" id="totalLeft">0</div>
+        <div class="tasbih-total-label">ذكر متبقٍّ</div>
+      </div>
+      <div class="tabs" role="tablist" aria-label="نوع الأذكار">
+        <button class="tab active" data-tab="morning" role="tab" aria-selected="true">🌅 الصباح</button>
+        <button class="tab" data-tab="evening" role="tab" aria-selected="false">🌙 المساء</button>
+      </div>
+      <input id="search" class="search" type="search" placeholder="🔍 ابحث في الأذكار…" aria-label="بحث في الأذكار" />
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <div id="cards" class="cards"></div>
+
+  <section class="virtue-banner">
+    <h3>فضل الذكر</h3>
+    <p>﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾ — سورة البقرة 152</p>
+    <p class="muted">قال ﷺ: «مثل الذي يذكر ربه والذي لا يذكر ربه مثل الحي والميت» — متفق عليه</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>صُنع بحب لخدمة الذاكرين 🤲 — يتم حفظ تقدمك وخطك المفضل في متصفحك</p>
+    <p class="muted small">خط ثمانية © ثمانية — يُحمّل عبر CDN. الأذكار من الصحيحين وكتب الأذكار الموثوقة.</p>
+  </div>
+</footer>
+
+<template id="cardTemplate">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num"></span>
+      <span class="repeat-badge"></span>
+    </div>
+    <p class="dhikr-text"></p>
+    <p class="dhikr-virtue"></p>
+    <div class="counter-row">
+      <div class="counter-info">
+        <span class="remaining"></span>
+        <div class="mini-bar"><div class="mini-fill"></div></div>
+      </div>
+      <div class="counter-btns">
+        <button class="tasbih-btn">🤲 سبِّح <b class="tasbih-count"></b></button>
+        <button class="reset-btn" aria-label="إعادة هذا الذكر">↺</button>
+      </div>
+    </div>
+    <div class="done-overlay">✓ تم بحمد الله</div>
+  </article>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>
